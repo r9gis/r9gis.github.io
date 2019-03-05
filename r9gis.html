@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>9gis.github.io</title>
+        <title>R9GIS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="dchiang">
@@ -12,29 +12,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
         <script src="https://js.arcgis.com/4.8/"></script>
-        <!--<link rel="stylesheet" href="https://biosgis.github.io/css/dotty.css">-->
+        <link rel="stylesheet" href="https://biosgis.github.io/css/dotty.css">
         <script src="https://biosgis.github.io/js/dotty.js"></script>
         <style>
             body {
                 font-family: Consolas, Monaco, monospace;
-                font-size: 150%;
-            }
-            header {
-                border-bottom: 1px solid silver;
-                padding: 1%;
-                text-align: center;
-            }
-            main {
-                padding: 1%;
-                text-align: center;
-            }
-            footer {
-                position: fixed; bottom: 0; left: 0; right: 0;
-                height: auto; width: 100%;
-                border-top: 1px solid silver;
-                font-size: smaller;
-                margin-top: 10px;
-                padding: 5px;
+                font-size: 123%;
             }
             details {
                 border-bottom: 1px solid cadetblue;
@@ -50,18 +33,34 @@
     </head>
     <body>
         <header>
-            <h1>404</h1>
+            <h1>R9 GIS</h1>
         </header>
         <main>
-            <h2>Page Not Found</h2>
-            <h3>The page you are looking for does not exist</h3>
+            <h2>Research portal</h2>
+            <ul>
+                <li>20180515 Created index page</li>
+                <li>
+                    20180918 GitHub pages should be
+                    <a href="https://stackoverflow.com/questions/26416727/cross-origin-resource-sharing-on-github-pages">
+                        CORS</a> enabled
+                </li>
+                <li>
+                    20190304 Git cloned into local.
+                    Then copied NetBeans 10 HTML5 project content here 
+                    (since cannot create new project in existing folder).
+                </li>
+            </ul>
+            <pre>
+            </pre>
         </main>
         <footer>
+            @<a href="mailto:biosgis@gmail.com">biosgis</a>
             <script>
-                //document.write('&copy;' + document.lastModified + brk);
-                document.write('&rect; Window Size: ' + window.innerWidth + 'x' + window.innerHeight);
-                document.write(' &diams; Browser Client: ' + navigator.userAgent + ' on ' + navigator.platform);
-                document.write(' &bull; URL Referer: ' + document.referrer);
+                var brk = '<br>';
+                document.write('&copy;' + document.lastModified + brk);
+                document.write('&bull; URL Referer: ' + document.referrer + brk);
+                document.write('&diams; Browser Client: ' + navigator.userAgent + ' on ' + navigator.platform + brk);
+                document.write('&rect; Window Size: ' + window.innerWidth + 'x' + window.innerHeight + brk);
             </script>
         </footer>
     </body>
