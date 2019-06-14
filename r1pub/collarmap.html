@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Collar Map</title>
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1" />
+        <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+      aside {
+          position: fixed;
+          bottom: 0; right: 0; top: 51px;
+          background-color: white;
+          border-left: 1px solid silver;
+          height: auto; width: 30%;
+      }
+      aside li {
+          border-top: 1px solid ghostwhite;
+          cursor: default;
+          line-height: 100%;
+      }
+      body {
+          font-family: sans-serif;
+          font-size: 123%;
+          line-height: 123%;
+      }
+      button {
+          font-size: 100%;
+      }
+      header {
+          position: fixed;
+          left: 0; right: 0; top: 0;
+          height: 50px;
+          background-color: white;
+          border-bottom: 1px solid silver;
+          padding: 5px;
+      }
+      h1 {
+          margin-top: 0;
+      }
+      main {
+          position: fixed;
+          bottom: 0; left: 0; right: 30%; top: 52px;
+          height: auto;
+          background-color: white;
+      }
+      input {
+          font-size: 100%;
+        width: 80%;
+        padding: 5px;
+      }
+      .container {
+        padding: 1em;
+      }
+      .panel {
+          padding: 10px;
+      }
+    </style>
+    <link rel="stylesheet"
+      href="https://js.arcgis.com/4.11/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.11/"></script>
+    <script type="text/javascript">
+        function $(id) {
+            return document.getElementById(id);
+        }
+    </script>
+    <script>
+        var getcollar = null;
+      require([
+        "esri/request"
+      ], function(
+        esriRequest
+      ) {
+        var resultsDiv = document.getElementById("resultsDiv");
+        var input = document.getElementById("inputUrl");
+        var options = {
+          query: {
+            f: "json"
+          },
+          responseType: "json"
+        };
+
+        // Make the request on a button click using the
+        // value of the 'input' text.
+        //on(btnQuery, "click", function() {
+        btnQuery.addEventListener("click", function() {
+          var url = input.value;
+          esriRequest(url, options).then(function(response) {
+            console.log("response", response);
+            var responseJSON = JSON.stringify(response, null, 2);
+            resultsDiv.innerHTML = responseJSON;
+          });
+        });
+        var requrl = 'https://wombat.vectronic-wildlife.com:9443/v2/collar/COLLARID/gps';//?collarkey=
+        var collaridkeys = {
+            18461: "68C9B8A4BAD4EC91BA2E6582DFC6E5B5D2EFEAF18DA697AD6ED87DA8CD6179B36F420223714105432FD39CC11EF71511EA486D1669B2E7DF3398A2B30850E619AECA40B1A8C614CED47B66F8DEF6DC324816DE62F06F46114CF66B9D857F2801D3A12AF37E157ACB60D9C5E4868A1D0E8304AFDA39D64FD9DB24A156852BEDDBE27782091E3973B4D59F6D79E2B0F0471038D2C45C763A50454FCD4F664CB6F44F2D8BA71BA9FEF2BF182ECF8E57623B4F4CA019BBA813924474F6423C481E6A791AE37C43C36E920FDEC90B3F65CDCB647BC92A0476081846141E3F155C87970B04DF4E83060CB9D98840EA50C3D42BF1B51769E72F163ED89FA055B302C24E"
+        };//// TODO:  add more key-values to this json
+        getcollar = function (x) {
+            var uiid = x.id;
+            var collarid = uiid.split('-')[1];
+            var collarkey = x.getAttribute('data-key');
+            $('collarid').innerHTML = collarid;
+            $('collarkey').innerHTML = collarkey;
+            var qurl = requrl.replace('COLLARID', collarid);
+            $('inputUrl').value = qurl;
+            var options = {
+              query: {
+                collarkey: collarkey
+              },
+              responseType: "json"
+            };
+            esriRequest(qurl, options).then(function(response) {
+                var res = response;
+              console.log("response-length: ", response.length);
+              var responseJSON = JSON.stringify(response, null, 2);
+              resultsDiv.innerHTML = responseJSON;
+            });
+        }
+        console.log('DONE AMD REQUIRED');
+      });
+    </script>
+    </head>
+    <body>
+        <header>
+            <h1>Locate Collar</h1>
+        </header>
+        <nav>
+            <ul>
+                <li></li>
+            </ul>
+        </nav>
+        <main>
+            <div class="container">
+              <div>
+                <h2>Using esri/request</h2>
+                <button id="btnQuery">Make Request</button>
+                <input
+                  id="inputUrl"
+                  type="text"
+                  value="https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"
+                />
+              </div>
+              <pre id="resultsDiv"></pre>
+            </div>
+        </main>
+        <aside class="">
+            <h2>
+                Pick a Collar
+            </h2>
+            <div class="panel">
+                <ol>
+                    <li onclick="getcollar(this)" id="deer-18461" data-key="68C9B8A4BAD4EC91BA2E6582DFC6E5B5D2EFEAF18DA697AD6ED87DA8CD6179B36F420223714105432FD39CC11EF71511EA486D1669B2E7DF3398A2B30850E619AECA40B1A8C614CED47B66F8DEF6DC324816DE62F06F46114CF66B9D857F2801D3A12AF37E157ACB60D9C5E4868A1D0E8304AFDA39D64FD9DB24A156852BEDDBE27782091E3973B4D59F6D79E2B0F0471038D2C45C763A50454FCD4F664CB6F44F2D8BA71BA9FEF2BF182ECF8E57623B4F4CA019BBA813924474F6423C481E6A791AE37C43C36E920FDEC90B3F65CDCB647BC92A0476081846141E3F155C87970B04DF4E83060CB9D98840EA50C3D42BF1B51769E72F163ED89FA055B302C24E">18461</li>
+                </ol>
+                <h3>Selected</h3>
+                <label for="">Collar ID</label>:
+                <span id="collarid"></span><br>
+                <label for="">Collar key</label>:
+                <div class="" id="collarkey"></div>
+            </div>
+        </aside>
+        <footer>
+            <a href="https://www.vectronic-aerospace.com/wp-content/uploads/2018/11/VECTRONIC-Aerospace-HTTP-Wildlife-API-2.pdf">
+                VECTRONIC Wildlife API doc
+            </a>
+        </footer>
+    </body>
+</html>
